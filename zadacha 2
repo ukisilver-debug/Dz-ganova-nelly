@@ -1,0 +1,94 @@
+#include <iostream>
+int deposit(int& balance, int k) {
+    if (k <= 0) {
+        std::cout << "error\n";
+        return 1;
+    }
+    balance = balance + k;
+    return 0;
+}
+int withdraw(int& balance, int k) {
+    if (k <= 0) {
+        std::cout << "error\n";
+        return 1;
+    }
+    if (k > balance) {
+        std::cout << "error\n";
+        return 1;
+    }
+    balance = balance - k;
+    return 0;
+}
+int showBalance(int& balance, int k) {
+    std::cout << balance << "\n";
+    return 0;
+}
+int resetBalance(int& balance, int k) {
+    balance = 0;
+    return 0;
+}
+int doubleBalance(int& balance, int k) {
+    balance = balance * 2;
+    return 0;
+}
+bool isEqual(const char* a, const char* b) {
+    int i = 0;
+    while (a[i] != '\0') {
+        if (b[i] == '\0') {
+            return false;
+        }
+        if (a[i] != b[i]) {
+            return false;
+        }
+        i = i + 1;
+    }
+    if (b[i] != '\0') {
+        return false;
+    }
+    return true;
+}
+int main() {
+    int balance = 0;
+    char cmd[20];
+    int amount = 0;
+    const char* names[5];
+    names[0] = "deposit";
+    names[1] = "withdraw";
+    names[2] = "balance";
+    names[3] = "reset";
+    names[4] = "x2";
+    int (*funcs[5])(int&, int);
+    funcs[0] = deposit;
+    funcs[1] = withdraw;
+    funcs[2] = showBalance;
+    funcs[3] = resetBalance;
+    funcs[4] = doubleBalance;
+    while (true) {
+        std::cin >> cmd;
+        if (isEqual(cmd, "stop")) {
+            break;
+        }
+        int found = -1;
+        for (int i = 0; i < 5; i++) {
+            if (isEqual(cmd, names[i])) {
+                found = i;
+            }
+        }
+        if (found == -1) {
+            std::cout << "error\n";
+        } else {
+            if (found == 0) {
+                std::cin >> amount;
+            }
+            else if (found == 1) {
+                std::cin >> amount;
+            }
+            else {
+                amount = 0;
+            }
+            funcs[found](balance, amount);
+        }
+    }
+    return 0;
+}
+    
