@@ -1,0 +1,47 @@
+#include <iostream>
+
+// Задача. В пакете 2 коробки, в коробке 2 конфеты. Сохранить вес каждой конфеты. 
+
+int main() {
+    int*** pakety = new int**[2];
+    for (int i = 0; i < 2; i++) {
+        pakety[i] = new int*[2];
+        for (int j = 0; j < 2; j++) {
+            pakety[i][j] = new int[2];
+        }
+    }
+    int ves = 1;
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 2; j++) {
+            for (int k = 0; k < 2; k++) {
+                pakety[i][j][k] = ves;
+                ves = ves + 1;
+            }
+        }
+    }
+    std::cout << "Вес конфет:\n";
+    for (int i = 0; i < 2; i++) {
+        std::cout << "Пакет " << i + 1 << ":\n";
+        for (int j = 0; j < 2; j++) {
+            std::cout << "  Коробка " << j + 1 << ": ";
+            for (int k = 0; k < 2; k++) {
+                std::cout << pakety[i][j][k] << " ";
+            }
+            std::cout << "\n";
+        }
+    }
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 2; j++) {
+            delete[] pakety[i][j];
+        }
+        delete[] pakety[i];
+    }
+    delete[] pakety;
+    int chislo = 42;
+    void* yashik = &chislo;
+    std::cout << "\nВ ящике число: " << *(static_cast<int*>(yashik)) << "\n";
+    const char* bukva = "A";
+    yashik = &bukva;
+    std::cout << "В ящике буква: " << *(static_cast<const char**>(yashik)) << "\n";
+    return 0;
+}
