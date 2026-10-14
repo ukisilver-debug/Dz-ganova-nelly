@@ -1,0 +1,74 @@
+#include <iostream>
+const int rows = 5;
+const int cols = 10;
+int clear(char table[rows][cols]) {
+    for (int y = 0; y < rows; y++) {
+        for (int x = 0; x < cols; x++) {
+            table[y][x] = ' ';
+        }
+    }
+    return 0;
+}
+bool put(char table[rows][cols], int x, int y, char c) {
+    if (x < 0 || x >= cols) return false;
+    if (y < 0 || y >= rows) return false;
+    table[y][x] = c;
+    return true;
+}
+bool text(char table[rows][cols], int x, int y, const char* word) {
+    int len = 0;
+    while (word[len] != '\0') {
+        len = len + 1;
+    }
+    if (x < 0 || x + len > cols) return false;
+    if (y < 0 || y >= rows) return false;
+    for (int i = 0; i < len; i++) {
+        table[y][x + i] = word[i];
+    }
+    return true;
+    }
+int print(const char table[rows][cols]) {
+    for (int y = 0; y < rows; y++) {
+        for (int x = 0; x < cols; x++) {
+            std::cout << table[y][x];
+        }
+        std::cout << "\n";
+    }
+    return 0;
+}
+int main() {
+    char table[rows][cols];
+    clear(table);
+    char cmd[20];
+    char word[100];
+    int x, y;
+    char c;
+    while (true) {
+        std::cin >> cmd;
+        if (cmd[0] == 'q') {
+            break;
+        }
+        else if (cmd[0] == 'c') {
+            clear(table);
+        }
+        else if (cmd[0] == 'p' && cmd[1] == 'u') {
+            std::cin >> x >> y >> c;
+            if (put(table, x, y, c) == false) {
+                std::cout << "error\n";
+            }
+        }
+        else if (cmd[0] == 't') {
+            std::cin >> x >> y >> word;
+            if (text(table, x, y, word) == false) {
+                std::cout << "error\n";
+            }
+        }
+        else if (cmd[0] == 'p' && cmd[1] == 'r') {
+            print(table);
+        }
+        else {
+            std::cout << "error\n";
+        }
+    }
+    return 0;
+}
